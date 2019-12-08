@@ -10,15 +10,18 @@ var session = require("express-session");
 var flash = require("connect-flash");
 
 const multer = require("multer");
-const fs = require("fs");
-
-var assert = require("assert");
-
 HandlebarsIntl.registerWith(Handlebars);
 
 require("./Model/Post");
 
 const app = express();
+
+//handlebars
+
+Handlebars.registerHelper("trimString", function(passedString) {
+  var theString = [...passedString].splice(6).join("");
+  return new Handlebars.SafeString(theString);
+});
 
 //load postSchema
 
@@ -53,6 +56,17 @@ app.engine("handlebars", exphbs());
 app.set("view engine", "handlebars");
 
 //multer middleware
+
+var storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, "public/uploads/");
+  },
+  filename: function(req, file, cb) {
+    cb(null, Date.now() + file.originalname);
+  }
+});
+
+var upload = multer({ storage: storage });
 
 //bodyparser middlewares
 // parse application/x-www-form-urlencoded
@@ -113,8 +127,14 @@ app.get("/posts/posts", (req, res) => {
 });
 
 //post request
-app.post("/posts/addposts", (req, res) => {
+app.post("/posts/addposts", upload.single("photo"), (req, res, next) => {
   //upload file
+
+  // var fileinfo = req.file;
+  // var title = req.body.title;
+  // var details = req.body.details;
+  // console.log(title, details);
+  // res.send(fileinfo);
 
   const errors = [];
   if (!req.body.title) {
@@ -131,6 +151,7 @@ app.post("/posts/addposts", (req, res) => {
     });
   } else {
     const newPosts = {
+      photo: req.file,
       title: req.body.title,
       details: req.body.details
     };

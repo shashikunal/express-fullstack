@@ -5,7 +5,11 @@
     {{/each}}
     <div class="card-body">
         <h1 class="display-5 text-left">Add posts</h1>
-        <form class="ui form" action="/posts/addposts" method="POST">
+        <form class="ui form" action="/posts/addposts" method="POST" enctype="multipart/form-data">
+            <div class="field">
+                <label>Photo</label>
+                <input type="file" name="photo" placeholder=" add photo">
+            </div>
 
             <div class="field">
                 <label>Title</label>

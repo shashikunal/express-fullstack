@@ -63,3 +63,8 @@ body {
   text-align: center;
   margin: 0 auto;
 }
+
+.ui.card > .image > img,
+.ui.cards > .card > .image > img {
+  height: 300px;
+}

@@ -4,7 +4,9 @@
 
         <div class="ui card mt-3">
             <div class="image">
-                <img src="https://semantic-ui.com/images/avatar2/large/kristy.png">
+                {{!-- <img src="https://semantic-ui.com/images/avatar2/large/kristy.png"> --}}
+
+                <img src="{{ trimString photo.0.path}}" alt=" image">
             </div>
             <div class="content">
                 <a class="header">{{title}}</a>
@@ -38,7 +40,7 @@
             </div>
         </div>
 
-   {{else}}
+        {{else}}
         <p class="text-danger">No Posts here</p>
         {{/each}}
     </div>
