@@ -8,13 +8,14 @@ var HandlebarsIntl = require("handlebars-intl");
 var methodOverride = require("method-override");
 var session = require("express-session");
 var flash = require("connect-flash");
+var passport = require("passport");
 
-const multer = require("multer");
 HandlebarsIntl.registerWith(Handlebars);
-
-require("./Model/Post");
-
 const app = express();
+
+//passport
+
+require("./config/passport")(passport);
 
 //handlebars
 
@@ -23,9 +24,12 @@ Handlebars.registerHelper("trimString", function(passedString) {
   return new Handlebars.SafeString(theString);
 });
 
-//load postSchema
+//load post routes
 
-const Posts = mongoose.model("posts");
+const posts = require("./Routes/posts");
+
+//load auth routes
+const auth = require("./Routes/auth");
 
 //connection mongodb
 const mongodbUrl =
@@ -49,24 +53,13 @@ mongoose.connect(
 app.use(methodOverride("_method"));
 
 //serve static files
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname + "/public")));
 
 //template engine
 app.engine("handlebars", exphbs());
 app.set("view engine", "handlebars");
 
 //multer middleware
-
-var storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, "public/uploads/");
-  },
-  filename: function(req, file, cb) {
-    cb(null, Date.now() + file.originalname);
-  }
-});
-
-var upload = multer({ storage: storage });
 
 //bodyparser middlewares
 // parse application/x-www-form-urlencoded
@@ -84,6 +77,9 @@ app.use(
   })
 );
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(flash());
 
 //global messages
@@ -91,111 +87,16 @@ app.use(function(req, res, next) {
   res.locals.success_msg = req.flash("success_msg");
   res.locals.error_msg = req.flash("error_msg");
   res.locals.error = req.flash("error");
+  res.locals.user = req.user || null;
   next();
 });
 
-//routing
 app.get("/", (req, res) => {
   res.render("home.handlebars");
 });
 
-app.get("/posts/addposts", (req, res) => {
-  res.render("posts/addposts");
-});
-//edit posts
-app.get("/posts/editpost/:id", (req, res) => {
-  Posts.findOne({
-    _id: req.params.id
-  }).then(post => {
-    res.render("posts/editpost", {
-      post: post
-    });
-  });
-});
-
-app.get("/posts/posts", (req, res) => {
-  Posts.find({})
-    .sort({ date: "desc" })
-
-    .then(post => {
-      res.render("posts/posts", {
-        post: post,
-        title: "Posts page"
-      });
-    })
-    .catch(err => console.log(err));
-});
-
-//post request
-app.post("/posts/addposts", upload.single("photo"), (req, res, next) => {
-  //upload file
-
-  // var fileinfo = req.file;
-  // var title = req.body.title;
-  // var details = req.body.details;
-  // console.log(title, details);
-  // res.send(fileinfo);
-
-  const errors = [];
-  if (!req.body.title) {
-    errors.push({ text: "Title field is Required" });
-  }
-  if (!req.body.details) {
-    errors.push({ text: "details field is Required" });
-  }
-  if (errors.length > 0) {
-    res.render("posts/addposts", {
-      errors: errors,
-      title: req.body.title,
-      details: req.body.details
-    });
-  } else {
-    const newPosts = {
-      photo: req.file,
-      title: req.body.title,
-      details: req.body.details
-    };
-
-    new Posts(newPosts)
-      .save()
-      .then(post => {
-        console.log(post);
-        req.flash("success_msg", "successfully post Added💩");
-        res.redirect("/posts/posts");
-      })
-      .catch(err => console.log(err));
-  }
-});
-
-//edit post put request
-app.put("/posts/editpost/:id", (req, res) => {
-  //save new data to database
-  Posts.findOne({
-    _id: req.params.id
-  })
-    .then(post => {
-      post.title = req.body.title;
-      post.details = req.body.details;
-
-      post.save().then(post => {
-        req.flash("success_msg", "successfully post Updated😃");
-        res.redirect("/posts/posts");
-      });
-    })
-    .catch(err => console.log(err));
-});
-
-//delete post request
-app.delete("/posts/deletepost/:id", (req, res) => {
-  Posts.remove({
-    _id: req.params.id
-  })
-    .then(_ => {
-      req.flash("success_msg", "successfully Post Deleted 😡");
-      res.redirect("/posts/posts");
-    })
-    .catch(err => console.log(err));
-});
+app.use("/posts", posts);
+app.use("/auth", auth);
 
 app.get("**", (req, res) => {
   res.render("404.handlebars");

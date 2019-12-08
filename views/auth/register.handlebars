@@ -1,0 +1,46 @@
+<div class="ui middle aligned center aligned grid login">
+    <div class="column mt-4">
+        <h2 class="ui image header">
+            <div class="content">
+                Register to your account
+            </div>
+        </h2>
+        <form action="/auth/register" method="POST" class="ui large form">
+            <div class="ui stacked secondary  segment">
+
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" name="name" placeholder="enter a name">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="email" name="email" placeholder="E-mail address">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input type="password" name="password" placeholder="Password">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input type="password" name="confirmpassword" placeholder=" confirm Password">
+                    </div>
+                </div>
+                <div class="ui fluid large teal submit button">Register</div>
+            </div>
+
+            <div class="ui error message"></div>
+
+        </form>
+
+        <div class="ui message">
+            New to us? <a href="/auth/login">Login</a>
+        </div>
+    </div>
+</div>

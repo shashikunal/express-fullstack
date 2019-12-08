@@ -1,18 +1,17 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const PostSchema = new Schema({
-  photo: [],
-
-  title: {
+const UserSchema = new Schema({
+  name: {
     type: String,
     required: true
   },
-  details: {
+  email: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
-  user: {
+  password: {
     type: String,
     required: true
   },
@@ -22,4 +21,4 @@ const PostSchema = new Schema({
   }
 });
 
-mongoose.model("posts", PostSchema);
+mongoose.model("users", UserSchema);

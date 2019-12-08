@@ -1,8 +1,5 @@
 <div class="col-md-10 offset-1 card mt-4">
-    {{#each errors}}
-    <div class="alert alert-danger m-2">{{text}}</div>
-    {{else}}
-    {{/each}}
+
     <div class="card-body">
         <h1 class="display-5 text-left">Add posts</h1>
         <form class="ui form" action="/posts/addposts" method="POST" enctype="multipart/form-data">
@@ -24,9 +21,7 @@
             <button class="ui secondary button" type="submit">
                 submit
             </button>
-            <button class="ui button">
-                Reset
-            </button>
+
         </form>
     </div>
 </div>

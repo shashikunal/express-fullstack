@@ -52,6 +52,10 @@ body {
 .ui.card,
 .ui.cards > .card {
   width: 274px;
+  border: none;
+}
+.card {
+  border: none;
 }
 
 .fournotfour {
@@ -67,4 +71,17 @@ body {
 .ui.card > .image > img,
 .ui.cards > .card > .image > img {
   height: 300px;
+}
+
+body > .grid {
+  height: 100%;
+}
+/* .image {
+  margin-top: -100px;
+} */
+
+.aligned.grid.login .column {
+  max-width: 450px;
+  display: flex;
+  justify-items: center;
 }
