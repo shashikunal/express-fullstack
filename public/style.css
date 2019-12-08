@@ -1,0 +1,65 @@
+body {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown-menu {
+  border-radius: 0px;
+  margin: 7px 0px;
+  padding: 0;
+}
+
+.dropdown-menu a {
+  border-block-end: 1px solid #eee;
+  padding: 10px;
+}
+
+.dropdown-menu a:last-child {
+  border-block-end: none;
+}
+
+.ui.card {
+  margin: 0em 5px;
+}
+
+.divtext {
+  display: flex;
+}
+
+.header {
+  display: inline-block;
+  background: #eeeeee6e;
+  width: 100%;
+  padding: 10px;
+  margin: 3px 0 20px;
+  border-bottom: 1px solid #eee;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+.description {
+  text-transform: capitalize;
+  display: inline-block;
+  letter-spacing: 0.4px;
+  height: 170px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ui.grid > * {
+  display: contents;
+}
+.ui.card,
+.ui.cards > .card {
+  width: 274px;
+}
+
+.fournotfour {
+  vertical-align: middle;
+  border-style: none;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  text-align: center;
+  margin: 0 auto;
+}

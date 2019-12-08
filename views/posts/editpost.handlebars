@@ -1,0 +1,28 @@
+<div class="col-md-10 offset-1 card mt-4">
+    {{#each errors}}
+    <div class="alert alert-danger m-2">{{text}}</div>
+    {{else}}
+    {{/each}}
+    <div class="card-body">
+        <h1 class="display-5 text-left">edit posts</h1>
+        <form class="ui form" action="/posts/editpost/{{post.id}}?_method=PUT" method="post">
+            <input type="hidden" name="_method" value="PUT">
+            <div class="field">
+                <label>Title</label>
+                <input type="text" name="title" placeholder=" add Title" value="{{post.title}}">
+            </div>
+
+            <div class="field">
+                <label>Details</label>
+                <textarea spellcheck="false" placeholder="Add details" name="details">{{post.details}}</textarea>
+            </div>
+
+            <button class="ui secondary button" type="submit">
+                Edit
+            </button>
+            <button class="ui button">
+                Reset
+            </button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+{
+  "name": "express-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "cors": "^2.8.5",
+    "del": "^5.1.0",
+    "express": "^4.17.1",
+    "express-flash-messages": "^0.1.1",
+    "express-handlebars": "^3.1.0",
+    "express-session": "^1.17.0",
+    "handlebars": "^4.5.3",
+    "handlebars-dateformat": "^1.1.1",
+    "handlebars-intl": "^1.1.2",
+    "lokijs": "^1.5.8",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.7.14",
+    "multer": "^1.4.2"
+  }
+}

@@ -1,0 +1,44 @@
+<div class="ui grid mt-4">
+    <div class="divtext">
+        {{#each post }}
+
+        <div class="ui card mt-3">
+            <div class="image">
+                <img src="https://semantic-ui.com/images/avatar2/large/kristy.png">
+            </div>
+            <div class="content">
+                <a class="header">{{title}}</a>
+                <div class="meta">
+                    <span class="date float-left">
+                        {{formatDate  date day="numeric" month="long" year="numeric"}}</br></span>
+                    <span class="badge badge-success float-right">{{formatRelative  date postDate}}</span>
+                </div>
+
+                <div class="description" style="display: inline-block;">
+                    {{details}}
+                </div>
+            </div>
+            <div class="extra content">
+                <a>
+                    <i class="user icon"></i>
+                    22 Friends
+                </a>
+
+                <div class="ui buttons mt-2 mb-2 text-center">
+                    <a class="ui green basic button" href="/posts/editpost/{{id}}">
+                        <i class="edit icon"></i>Edit</a>
+                    <form action="/posts/deletepost/{{id}}?_method=DELETE" method="post">
+                        <input type="hidden" name="_method" value="DELETE">
+
+                        <button class="ui red basic button" type="submit">
+                            <i class="delete icon"></i>Delete</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+   {{else}}
+        <p class="text-danger">No Posts here</p>
+        {{/each}}
+    </div>
